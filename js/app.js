@@ -44,6 +44,20 @@
     }
   };
 
+  /* Horário de funcionamento real — 0=dom, 1=seg, ... 6=sáb */
+const HORARIOS = {
+  loja1: {
+    0: { abre: 8,  fecha: 14 },   // Domingo
+    1: { abre: 8,  fecha: 22 },   // Segunda
+    2: { abre: 8,  fecha: 22 },   // Terça
+    3: { abre: 8,  fecha: 22 },   // Quarta
+    4: { abre: 8,  fecha: 22 },   // Quinta
+    5: { abre: 8,  fecha: 22 },   // Sexta
+    6: { abre: 8,  fecha: 22 }    // Sábado
+  }
+  // Loja 2: horário "consulte pelo WhatsApp" — não tem horário fixo no hero
+};
+
   /* ==========================================================
      PRODUTOS EM PROMOÇÃO
      ========================================================== */
@@ -439,5 +453,71 @@
       closeMenu();
     });
   });
+
+  /* ==========================================================
+   STATUS ABERTO / FECHADO — hero pill
+   ========================================================== */
+const NOMES_DIA = ['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+
+function statusLoja(horarios){
+  const agora  = new Date();
+  const dia    = agora.getDay();
+  const horas  = agora.getHours() + agora.getMinutes() / 60;
+  const hoje   = horarios[dia];
+
+  /* 1) Se hoje tem horário e estamos dentro dele → ABERTO */
+  if (hoje && horas >= hoje.abre && horas < hoje.fecha){
+    return {
+      aberto: true,
+      texto:  'Aberto agora',
+      detalhe: 'fecha às ' + hoje.fecha + 'h'
+    };
+  }
+
+  /* 2) Se hoje tem horário mas ainda vai abrir */
+  if (hoje && horas < hoje.abre){
+    return {
+      aberto: false,
+      texto:  'Fechado',
+      detalhe: 'abre hoje às ' + hoje.abre + 'h'
+    };
+  }
+
+  /* 3) Já fechou hoje (ou hoje não abre) → busca próximo dia */
+  for (let i = 1; i <= 7; i++){
+    const prox = (dia + i) % 7;
+    const h    = horarios[prox];
+    if (h){
+      const quando = i === 1 ? 'amanhã' : NOMES_DIA[prox];
+      return {
+        aberto: false,
+        texto:  'Fechado',
+        detalhe: 'abre ' + quando + ' às ' + h.abre + 'h'
+      };
+    }
+  }
+
+  return { aberto: false, texto: 'Fechado', detalhe: '' };
+}
+
+function atualizarStatusHero(){
+  const pill = document.querySelector('.hero__pill');
+  if (!pill) return;
+
+  const status = statusLoja(HORARIOS.loja1);
+
+  pill.classList.toggle('is-closed', !status.aberto);
+  pill.classList.toggle('is-open',   status.aberto);
+
+  pill.innerHTML =
+    '<span class="dot"></span> ' +
+    status.texto +
+    (status.detalhe ? ' • ' + status.detalhe : '') +
+    ' • Jundiapeba, Mogi das Cruzes';
+}
+
+/* Atualiza ao carregar e a cada 60 segundos */
+atualizarStatusHero();
+setInterval(atualizarStatusHero, 60000);
 
 })();

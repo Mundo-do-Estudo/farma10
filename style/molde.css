@@ -1032,3 +1032,15 @@ html[data-theme="dark"] .map-frame iframe{
   }
   .reveal{ opacity:1; transform:none; }
 }
+
+/* Estado FECHADO — ponto vermelho, sem pulsar */
+.hero__pill.is-closed .dot{
+  background: var(--primary);
+  animation: none;
+  box-shadow: none;
+}
+
+/* Estado ABERTO (reforço explícito) */
+.hero__pill.is-open .dot{
+  background: #16a34a;
+}
