@@ -1,4 +1,3 @@
-
 (function(){
   'use strict';
 
@@ -44,19 +43,32 @@
     }
   };
 
-  /* Horário de funcionamento real — 0=dom, 1=seg, ... 6=sáb */
-const HORARIOS = {
-  loja1: {
-    0: { abre: 8,  fecha: 14 },   // Domingo
-    1: { abre: 8,  fecha: 22 },   // Segunda
-    2: { abre: 8,  fecha: 22 },   // Terça
-    3: { abre: 8,  fecha: 22 },   // Quarta
-    4: { abre: 8,  fecha: 22 },   // Quinta
-    5: { abre: 8,  fecha: 22 },   // Sexta
-    6: { abre: 8,  fecha: 22 }    // Sábado
-  }
-  // Loja 2: horário "consulte pelo WhatsApp" — não tem horário fixo no hero
-};
+  /* ==========================================================
+     HORÁRIOS REAIS
+     0=dom, 1=seg, ... 6=sáb
+     Farma10: Seg-Sex 08:30-19:20 | Sáb 08:30-19:00 | Dom 08:00-16:00
+     Nova Mogi: Seg-Sáb 08:30-20:00 | Dom 08:30-15:00
+     ========================================================== */
+  const HORARIOS = {
+    loja1: {  // Farma10 — Jundiapeba
+      0: { abre: '08:00', fecha: '16:00' },  // Domingo
+      1: { abre: '08:30', fecha: '19:20' },  // Segunda
+      2: { abre: '08:30', fecha: '19:20' },  // Terça
+      3: { abre: '08:30', fecha: '19:20' },  // Quarta
+      4: { abre: '08:30', fecha: '19:20' },  // Quinta
+      5: { abre: '08:30', fecha: '19:20' },  // Sexta
+      6: { abre: '08:30', fecha: '19:00' }   // Sábado
+    },
+    loja2: {  // Drogaria Nova Mogi
+      0: { abre: '08:30', fecha: '15:00' },  // Domingo
+      1: { abre: '08:30', fecha: '20:00' },  // Segunda
+      2: { abre: '08:30', fecha: '20:00' },  // Terça
+      3: { abre: '08:30', fecha: '20:00' },  // Quarta
+      4: { abre: '08:30', fecha: '20:00' },  // Quinta
+      5: { abre: '08:30', fecha: '20:00' },  // Sexta
+      6: { abre: '08:30', fecha: '20:00' }   // Sábado
+    }
+  };
 
   /* ==========================================================
      PRODUTOS EM PROMOÇÃO
@@ -455,69 +467,76 @@ const HORARIOS = {
   });
 
   /* ==========================================================
-   STATUS ABERTO / FECHADO — hero pill
-   ========================================================== */
-const NOMES_DIA = ['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
+     STATUS ABERTO / FECHADO — hero pill
+     ========================================================== */
+  const NOMES_DIA = ['domingo','segunda','terça','quarta','quinta','sexta','sábado'];
 
-function statusLoja(horarios){
-  const agora  = new Date();
-  const dia    = agora.getDay();
-  const horas  = agora.getHours() + agora.getMinutes() / 60;
-  const hoje   = horarios[dia];
-
-  /* 1) Se hoje tem horário e estamos dentro dele → ABERTO */
-  if (hoje && horas >= hoje.abre && horas < hoje.fecha){
-    return {
-      aberto: true,
-      texto:  'Aberto agora',
-      detalhe: 'fecha às ' + hoje.fecha + 'h'
-    };
+  /* "08:30" → 510 minutos desde a meia-noite */
+  function horaParaMinutos(hhmm){
+    const partes = hhmm.split(':');
+    return parseInt(partes[0], 10) * 60 + parseInt(partes[1], 10);
   }
 
-  /* 2) Se hoje tem horário mas ainda vai abrir */
-  if (hoje && horas < hoje.abre){
-    return {
-      aberto: false,
-      texto:  'Fechado',
-      detalhe: 'abre hoje às ' + hoje.abre + 'h'
-    };
-  }
+  function statusLoja(horarios){
+    /* Fuso de Brasília — funciona mesmo se o visitante estiver em outro país */
+    const agora   = new Date(new Date().toLocaleString('en-US', { timeZone:'America/Sao_Paulo' }));
+    const dia     = agora.getDay();
+    const minutos = agora.getHours() * 60 + agora.getMinutes();
+    const hoje    = horarios[dia];
 
-  /* 3) Já fechou hoje (ou hoje não abre) → busca próximo dia */
-  for (let i = 1; i <= 7; i++){
-    const prox = (dia + i) % 7;
-    const h    = horarios[prox];
-    if (h){
-      const quando = i === 1 ? 'amanhã' : NOMES_DIA[prox];
+    /* 1) Hoje tem horário e estamos dentro dele → ABERTO */
+    if (hoje && minutos >= horaParaMinutos(hoje.abre) && minutos < horaParaMinutos(hoje.fecha)){
+      return {
+        aberto: true,
+        texto:  'Aberto agora',
+        detalhe: 'fecha às ' + hoje.fecha
+      };
+    }
+
+    /* 2) Hoje tem horário mas ainda vai abrir */
+    if (hoje && minutos < horaParaMinutos(hoje.abre)){
       return {
         aberto: false,
         texto:  'Fechado',
-        detalhe: 'abre ' + quando + ' às ' + h.abre + 'h'
+        detalhe: 'abre hoje às ' + hoje.abre
       };
     }
+
+    /* 3) Já fechou hoje (ou hoje não abre) → busca próximo dia */
+    for (let i = 1; i <= 7; i++){
+      const prox = (dia + i) % 7;
+      const h    = horarios[prox];
+      if (h){
+        const quando = i === 1 ? 'amanhã' : NOMES_DIA[prox];
+        return {
+          aberto: false,
+          texto:  'Fechado',
+          detalhe: 'abre ' + quando + ' às ' + h.abre
+        };
+      }
+    }
+
+    return { aberto: false, texto: 'Fechado', detalhe: '' };
   }
 
-  return { aberto: false, texto: 'Fechado', detalhe: '' };
-}
+  function atualizarStatusHero(){
+    const pill = document.querySelector('.hero__pill');
+    if (!pill) return;
 
-function atualizarStatusHero(){
-  const pill = document.querySelector('.hero__pill');
-  if (!pill) return;
+    const status = statusLoja(HORARIOS.loja1);
 
-  const status = statusLoja(HORARIOS.loja1);
+    pill.classList.toggle('is-closed', !status.aberto);
+    pill.classList.toggle('is-open',   status.aberto);
 
-  pill.classList.toggle('is-closed', !status.aberto);
-  pill.classList.toggle('is-open',   status.aberto);
+    pill.innerHTML =
+      '<span class="dot"></span> ' +
+      status.texto +
+      (status.detalhe ? ' • ' + status.detalhe : '') +
+      ' • Jundiapeba, Mogi das Cruzes';
+  }
 
-  pill.innerHTML =
-    '<span class="dot"></span> ' +
-    status.texto +
-    (status.detalhe ? ' • ' + status.detalhe : '') +
-    ' • Jundiapeba, Mogi das Cruzes';
-}
-
-/* Atualiza ao carregar e a cada 60 segundos */
-atualizarStatusHero();
-setInterval(atualizarStatusHero, 60000);
+  /* Atualiza ao carregar e a cada 60 segundos */
+  atualizarStatusHero();
+  setInterval(atualizarStatusHero, 60000);
 
 })();

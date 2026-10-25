@@ -115,56 +115,76 @@
       },
       "hasMap": "https://www.google.com.br/maps/place/Farma+10/@-23.5493447,-46.2519953,865m/data=!3m2!1e3!4b1!4m6!3m5!1s0x94ce7774dc780345:0x254032e0b1fce4f8!8m2!3d-23.5493496!4d-46.2494204!16s%2Fg%2F11z5tghvbr",
       "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-          "opens": "08:00",
-          "closes": "22:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": "Sunday",
-          "opens": "08:00",
-          "closes": "14:00"
-        }
-      ],
+  {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+    "opens": "08:30",
+    "closes": "19:20"
+  },
+  {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": "Saturday",
+    "opens": "08:30",
+    "closes": "19:00"
+  },
+  {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": "Sunday",
+    "opens": "08:00",
+    "closes": "16:00"
+  }
+],
       "sameAs": ["https://www.instagram.com/drogaria_farma10"],
       "areaServed": [
         { "@type": "City", "name": "Mogi das Cruzes" },
         { "@type": "Place", "name": "Jundiapeba" }
       ]
     },
+   {
+  "@type": "Pharmacy",
+  "@id": "https://farma10.com.br/#loja2",
+  "name": "Drogaria Nova Mogi",
+  "description": "Drogaria em Jundiapeba, Mogi das Cruzes. Medicamentos, higiene e beleza com preço baixo.",
+  "image": "https://farma10.com.br/img/farmacia-2.jpg",
+  "url": "https://farma10.com.br/#loja2",
+  "telephone": "+5511919500661",
+  "priceRange": "$",
+  "currenciesAccepted": "BRL",
+  "paymentAccepted": "Dinheiro, Cartão de Crédito, Cartão de Débito, Pix",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "R. Pedro Paulo dos Santos, 471",
+    "addressLocality": "Mogi das Cruzes",
+    "addressRegion": "SP",
+    "postalCode": "08750-053",
+    "addressCountry": "BR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -23.5517241,
+    "longitude": -46.2425752
+  },
+  "hasMap": "https://www.google.com.br/maps/place/Drogaria+Nova+Mogi/@-23.5517192,-46.2451501,865m/data=!3m2!1e3!4b1!4m6!3m5!1s0x94ce77dccf14675f:0x95406ceedd7d861c!8m2!3d-23.5517241!4d-46.2425752!16s%2Fg%2F11lcllvr8d",
+  "openingHoursSpecification": [
     {
-      "@type": "Pharmacy",
-      "@id": "https://farma10.com.br/#loja2",
-      "name": "Drogaria Nova Mogi",
-      "description": "Drogaria em Jundiapeba, Mogi das Cruzes. Medicamentos, higiene e beleza com preço baixo.",
-      "image": "https://farma10.com.br/img/farmacia-2.jpg",
-      "url": "https://farma10.com.br/#loja2",
-      "telephone": "+5511919500661",
-      "priceRange": "$",
-      "currenciesAccepted": "BRL",
-      "paymentAccepted": "Dinheiro, Cartão de Crédito, Cartão de Débito, Pix",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "R. Pedro Paulo dos Santos, 471",
-        "addressLocality": "Mogi das Cruzes",
-        "addressRegion": "SP",
-        "postalCode": "08750-053",
-        "addressCountry": "BR"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -23.5517241,
-        "longitude": -46.2425752
-      },
-      "hasMap": "https://www.google.com.br/maps/place/Drogaria+Nova+Mogi/@-23.5517192,-46.2451501,865m/data=!3m2!1e3!4b1!4m6!3m5!1s0x94ce77dccf14675f:0x95406ceedd7d861c!8m2!3d-23.5517241!4d-46.2425752!16s%2Fg%2F11lcllvr8d",
-      "sameAs": ["https://www.instagram.com/drogarianova_mogi"],
-      "areaServed": [
-        { "@type": "City", "name": "Mogi das Cruzes" },
-        { "@type": "Place", "name": "Jundiapeba" }
-      ]
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+      "opens": "08:30",
+      "closes": "20:00"
     },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Sunday",
+      "opens": "08:30",
+      "closes": "15:00"
+    }
+  ],
+  "sameAs": ["https://www.instagram.com/drogarianova_mogi"],
+  "areaServed": [
+    { "@type": "City", "name": "Mogi das Cruzes" },
+    { "@type": "Place", "name": "Jundiapeba" }
+  ]
+},
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
@@ -312,10 +332,10 @@ function imgFallback(img){
     <div class="hero__grid">
 
       <div class="hero__content reveal">
-        <span class="hero__pill">
-          <span class="dot"></span>
-          Aberto agora • Jundiapeba, Mogi das Cruzes
-        </span>
+       <span class="hero__pill">
+  <span class="dot"></span>
+  Jundiapeba, Mogi das Cruzes
+</span>
 
         <h1>
           Sua <span class="grad">farmácia em Mogi das Cruzes</span> com saúde, economia e cuidado.
@@ -387,7 +407,7 @@ function imgFallback(img){
         <span class="benefit__icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
         </span>
-        <div><strong>2 Lojas</strong><small>Jundiapeba e Nova Mogi</small></div>
+        <div><strong>2 Lojas</strong><small>Jundiapeba e Nova Jundiapeba</small></div>
       </div>
       <div class="benefit">
         <span class="benefit__icon">
@@ -495,12 +515,12 @@ function imgFallback(img){
       <article class="loja loja--destaque reveal" data-loja>
         <span class="loja__badge">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
-          Loja 1 • Principal
+          Loja 1 
         </span>
 
         <h3 class="loja__name">Farma10 — Jundiapeba</h3>
         <p class="loja__desc">
-          Nossa matriz em Jundiapeba. Estrutura completa, maior variedade de produtos e atendimento
+          Estrutura completa, maior variedade de produtos e atendimento
           farmacêutico. Aqui você encontra tudo em um só lugar em Mogi das Cruzes.
         </p>
 
@@ -509,10 +529,10 @@ function imgFallback(img){
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             R. Profa. Lucinda Bastos, 1246 — Jundiapeba
           </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-            Seg a Sáb • 8h às 22h &nbsp;|&nbsp; Dom • 8h às 14h
-          </li>
+       <li>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+  Seg a Sex • 08:30 às 19:20 &nbsp;|&nbsp; Sáb • 08:30 às 19:00 &nbsp;|&nbsp; Dom • 08:00 às 16:00
+</li>
         </ul>
 
         <button class="loja__toggle" type="button" aria-expanded="false">
@@ -595,9 +615,9 @@ function imgFallback(img){
             R. Pedro Paulo dos Santos, 471 — Jundiapeba
           </li>
           <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-            Consulte o horário pelo WhatsApp
-          </li>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+  Seg a Sáb • 08:30 às 20:00 &nbsp;|&nbsp; Dom • 08:30 às 15:00
+</li>
         </ul>
 
         <button class="loja__toggle" type="button" aria-expanded="false">
@@ -792,7 +812,12 @@ function imgFallback(img){
           <span>Qual o horário de funcionamento da Farma10 em Jundiapeba?</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         </button>
-        <div class="faq__a"><div class="faq__a-inner"><p>A Loja 1 (Farma10 — Jundiapeba) funciona de segunda a sábado, das 8h às 22h, e aos domingos das 8h às 16h. A Loja 2 (Drogaria Nova Mogi) segunda - sabado das 08:30-20:00 domingos das 08:30 as 15:00.</p></div></div>
+        <div class="faq__a"><div class="faq__a-inner"><p>
+  <strong>Farma10 (Loja 1):</strong> segunda a sexta, das 08:30 às 19:20;
+  sábado, das 08:30 às 19:00; domingo, das 08:00 às 16:00.<br>
+  <strong>Drogaria Nova Mogi (Loja 2):</strong> segunda a sábado, das 08:30 às 20:00;
+  domingo, das 08:30 às 15:00.
+</p></div></div>
       </div>
 
       <div class="faq__item">
