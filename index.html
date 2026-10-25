@@ -374,10 +374,25 @@ function imgFallback(img){
         </div>
       </div>
 
-      <div class="hero__media reveal">
-        <div class="hero__img-wrap">
-          <img src="img/frente.jpg" alt="Fachada da Farma10 — farmácia em Jundiapeba, Mogi das Cruzes" onerror="imgFallback(this)" fetchpriority="high">
-        </div>
+    <div class="hero__img-wrap">
+  <img src="img/frente.jpg" alt="Fachada da Farma10 — farmácia em Jundiapeba, Mogi das Cruzes" onerror="imgFallback(this)" fetchpriority="high" draggable="false">
+
+<!-- 🚪 Dica easter egg: bata 3× na porta -->
+<div class="hero__knock-hint" id="knockHint" aria-label="Toque três vezes na porta da farmácia para ver um vídeo especial">
+  <span class="hero__knock-hint__icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 11V6a2 2 0 0 1 4 0v5"/>
+      <path d="M13 11V4a2 2 0 0 1 4 0v7"/>
+      <path d="M17 11V6a2 2 0 0 1 4 0v10a6 6 0 0 1-6 6h-4l-4-4"/>
+    </svg>
+  </span>
+  <span class="hero__knock-hint__text">
+    Toque <strong>3 vezes</strong> na porta da farmácia
+  </span>
+  <span class="hero__knock-hint__dots" id="knockDots" aria-hidden="true">
+    <i></i><i></i><i></i>
+  </span>
+</div>
 
         <!-- <div class="float-card float-card--1">
           <span class="float-card__icon">
@@ -994,9 +1009,40 @@ function imgFallback(img){
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
 </button>
 
+
 <!-- ============================================================
-     JAVASCRIPT
+     MODAL — easter egg "bata 3× na porta"
      ============================================================ -->
+<div class="knock-modal" id="knockModal" role="dialog" aria-modal="true" aria-labelledby="knockTitle" aria-hidden="true">
+  <div class="knock-modal__backdrop" data-close="1"></div>
+
+  <div class="knock-modal__dialog">
+    <button class="knock-modal__close" type="button" aria-label="Fechar vídeo" data-close="1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+        <path d="M18 6 6 18M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <div class="knock-modal__media">
+      <video
+        id="videoKnock"
+        class="knock-modal__video"
+        preload="metadata"
+        playsinline
+        controls
+        poster="img/frente.jpg"
+        aria-label="Convite Farma10 — venha nos visitar em Jundiapeba, Mogi das Cruzes">
+        <source src="img/video.mp4" type="video/mp4">
+        Seu navegador não suporta vídeo HTML5.
+      </video>
+    </div>
+
+    <div class="knock-modal__caption">
+      <h3 id="knockTitle">Você bateu na porta! 🚪</h3>
+      <p>Bem-vindo à <strong>Farma10</strong> — sua farmácia em Jundiapeba, Mogi das Cruzes.</p>
+    </div>
+  </div>
+</div>
 <script src="js/app.js"></script>
 
 </body>

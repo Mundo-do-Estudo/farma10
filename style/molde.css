@@ -1043,3 +1043,243 @@ html[data-theme="dark"] .map-frame iframe{
 .hero__pill.is-open .dot{
   background: #16a34a;
 }
+
+
+/* ============================================================
+   EASTER EGG — BATA 3× NA PORTA
+   ============================================================ */
+
+/* Previne zoom por duplo-toque e seleção acidental no mobile */
+.hero__img-wrap{
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+/* ============================================================
+   DICA "TOQUE 3×" — Rodapé da imagem, Laranja
+   ============================================================ */
+.hero__knock-hint{
+  position: absolute;
+  bottom: 12px;               /* Colado no rodapé da imagem */
+  left: 50%;                  /* Centralizado */
+  transform: translateX(-50%);
+  z-index: 4;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+
+  background: #f97316;        /* Fundo LARANJA */
+  border-radius: 999px;
+  color: #fff;
+  font-family: var(--font-head);
+  font-size: 0.85rem;         /* Tamanho bom para leitura */
+  font-weight: 600;
+  letter-spacing: .01em;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,.4); /* Sombra para destacar da foto */
+  
+  /* Animação sutil de respiração */
+  animation: hintPulseSoft 3s ease-in-out infinite;
+}
+
+/* Faz a animação sem mover o pill do lugar (por causa do translateX) */
+@keyframes hintPulseSoft{
+  0%, 100%{ box-shadow: 0 4px 15px rgba(0,0,0,.4); transform: translateX(-50%) scale(1); }
+  50%     { box-shadow: 0 4px 22px rgba(249,115,22,.7); transform: translateX(-50%) scale(1.03); }
+}
+
+.hero__knock-hint strong{
+  color: #fff;
+  font-weight: 800;
+}
+
+/* Ícone da mãozinha */
+.hero__knock-hint__icon svg{
+  width: 16px;
+  height: 16px;
+  display: block;
+  transform-origin: 60% 70%;
+  animation: handKnock 2.8s ease-in-out infinite;
+}
+
+@keyframes handKnock{
+  0%, 65%, 100% { transform: rotate(0); }
+  70%, 80%, 90% { transform: rotate(-14deg); }
+  75%, 85%      { transform: rotate(0); }
+}
+
+/* Os 3 pontinhos da direita */
+.hero__knock-hint__dots{
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 4px;
+}
+.hero__knock-hint__dots i{
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.4); /* Apagado */
+  transition: background .3s var(--ease), transform .3s var(--ease-out);
+}
+.hero__knock-hint__dots i.filled{
+  background: #fff;                 /* Aceso quando clica */
+  transform: scale(1.2);
+}
+
+/* Responsivo para celular (diminui um pouco para caber na tela) */
+@media (max-width: 640px){
+  .hero__knock-hint{
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    bottom: 8px;
+    gap: 6px;
+  }
+  .hero__knock-hint__icon svg{ width: 14px; height: 14px; }
+  .hero__knock-hint__dots i{ width: 5px; height: 5px; }
+}
+/* ============================================================
+   MODAL
+   ============================================================ */
+.knock-modal{
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.knock-modal.is-open{
+  display: flex;
+  animation: knockFadeIn .3s var(--ease-out);
+}
+@keyframes knockFadeIn{
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.knock-modal__backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.knock-modal__dialog{
+  position: relative;
+  width: min(92vw, 520px);
+  max-height: 92vh;
+  background: var(--bg-elev);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px -20px rgba(0,0,0,.65);
+  border: 1px solid var(--border);
+  animation: knockPop .5s cubic-bezier(.16,1,.3,1);
+  display: flex;
+  flex-direction: column;
+}
+@keyframes knockPop{
+  from { opacity: 0; transform: scale(.9) translateY(16px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.knock-modal__close{
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.22);
+  color: #fff;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform .3s var(--ease-out), background .25s var(--ease), border-color .25s;
+  -webkit-tap-highlight-color: transparent;
+}
+.knock-modal__close:hover,
+.knock-modal__close:focus-visible{
+  background: var(--primary);
+  border-color: var(--primary);
+  transform: scale(1.08) rotate(90deg);
+  outline: none;
+}
+.knock-modal__close svg{ width: 18px; height: 18px; }
+
+.knock-modal__media{
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-height: 70vh;
+  background: #000;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+.knock-modal__video{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #000;
+}
+
+.knock-modal__caption{
+  padding: 18px 22px 22px;
+  text-align: center;
+  background: var(--bg-elev);
+  flex: 0 0 auto;
+}
+.knock-modal__caption h3{
+  font-family: var(--font-head);
+  font-size: 1.15rem;
+  margin: 0 0 6px;
+  color: var(--text);
+}
+.knock-modal__caption p{
+  color: var(--muted);
+  font-size: .88rem;
+  margin: 0;
+  line-height: 1.5;
+}
+.knock-modal__caption strong{ color: var(--text); }
+
+/* Trava scroll do body */
+body.knock-locked{
+  overflow: hidden;
+}
+
+/* ---------- Ajustes para telas curtas (landscape mobile) ---------- */
+@media (max-height: 640px){
+  .knock-modal__media{
+    aspect-ratio: auto;
+    height: 55vh;
+  }
+  .knock-modal__caption{
+    padding: 12px 16px 14px;
+  }
+  .knock-modal__caption h3{ font-size: 1rem; margin-bottom: 2px; }
+  .knock-modal__caption p{ font-size: .8rem; }
+}
+@media (max-height: 420px){
+  .knock-modal__caption{ display: none; }
+  .knock-modal__media{ height: 85vh; }
+}
+
+/* Acessibilidade */
+@media (prefers-reduced-motion: reduce){
+  .hero__knock-hint{ animation: none; }
+  .knock-modal.is-open{ animation: none; }
+  .knock-modal__dialog{ animation: none; }
+  .knock-ripple{ animation-duration: .3s; }
+}
+
+

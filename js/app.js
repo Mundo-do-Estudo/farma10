@@ -539,4 +539,120 @@
   atualizarStatusHero();
   setInterval(atualizarStatusHero, 60000);
 
+
+
+
+  /* ==========================================================
+   EASTER EGG — BATA 3× NA PORTA → abre popup com vídeo
+   ========================================================== */
+(function initKnockEgg(){
+  const heroWrap = document.querySelector('.hero__img-wrap');
+  const modal    = document.getElementById('knockModal');
+  const video    = document.getElementById('videoKnock');
+  const dots     = Array.from(document.querySelectorAll('#knockDots i'));
+  if (!heroWrap || !modal || !video) return;
+
+  /* ---------- Configuração ---------- */
+  const KNOCK_TOTAL  = 3;      // toques necessários
+  const KNOCK_WINDOW = 2000;   // janela em ms entre o 1º e o 3º toque
+  let   taps         = [];
+  let   resetTimer   = null;
+
+  /* ---------- Ripple a cada toque ---------- */
+  function showRipple(clientX, clientY){
+    const rect = heroWrap.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.className = 'knock-ripple';
+    ripple.style.left = (clientX - rect.left) + 'px';
+    ripple.style.top  = (clientY - rect.top)  + 'px';
+    heroWrap.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 900);
+  }
+
+  /* ---------- Preencher os pontinhos ---------- */
+  function updateDots(count){
+    dots.forEach((d, i) => d.classList.toggle('filled', i < count));
+  }
+
+  /* ---------- Abrir / fechar modal ---------- */
+  function openKnock(){
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('knock-locked');
+
+    /* Reset + play (o gesto do usuário ainda conta como user activation) */
+    try {
+      video.currentTime = 0;
+      const p = video.play();
+      if (p && p.catch) p.catch(() => { /* navegador bloqueou → controles ficam visíveis */ });
+    } catch(e){}
+
+    /* Foco no botão fechar (acessibilidade) */
+    setTimeout(() => {
+      const btn = modal.querySelector('.knock-modal__close');
+      if (btn) btn.focus({ preventScroll: true });
+    }, 120);
+  }
+
+  function closeKnock(){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('knock-locked');
+    try {
+      video.pause();
+      video.currentTime = 0;
+    } catch(e){}
+  }
+
+  /* ---------- Detecta os toques ---------- */
+  function handleKnock(e){
+    /* Só conta botão esquerdo / toque */
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+
+    const now = Date.now();
+    taps = taps.filter(t => now - t < KNOCK_WINDOW);
+    taps.push(now);
+
+    showRipple(e.clientX, e.clientY);
+    updateDots(taps.length);
+
+    /* Agenda reset dos pontinhos */
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
+      if (taps.length < KNOCK_TOTAL){
+        taps = [];
+        updateDots(0);
+      }
+    }, KNOCK_WINDOW + 150);
+
+    /* 🚪 TRÊS TOQUES → abre popup */
+    if (taps.length >= KNOCK_TOTAL){
+      taps = [];
+      updateDots(0);
+      openKnock();
+    }
+  }
+
+  /* Usa pointerdown (cobre mouse + touch + caneta sem duplicar) */
+  heroWrap.addEventListener('pointerdown', handleKnock);
+
+  /* ---------- Fechar ---------- */
+  modal.querySelectorAll('[data-close]').forEach(el => {
+    el.addEventListener('click', closeKnock);
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')){
+      closeKnock();
+    }
+  });
+
+  /* ---------- Se trocar de aba, pausa o vídeo ---------- */
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && !video.paused){
+      video.pause();
+    }
+  });
+})();
+
 })();
