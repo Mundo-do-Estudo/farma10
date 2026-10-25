@@ -19,6 +19,8 @@
       endereco:  'R. Profa. Lucinda Bastos, 1246 — Jundiapeba, Mogi das Cruzes / SP',
       whatsapp:  '(11) 97176-6026',
       waNumber:  '5511971766026',
+        farmaceutico: 'Drª Gabrielle Lima',
+      crf:          'CRF 123.923',
       telefone2: '(11) 4729-5132',
       instagram: '@drogaria_farma10',
       instagramUrl: INSTAGRAM1,
@@ -33,6 +35,8 @@
       endereco:  'R. Pedro Paulo dos Santos, 471 — Jundiapeba, Mogi das Cruzes / SP — CEP 08750-053',
       whatsapp:  '+55 11 91950-0661',
       waNumber:  '5511919500661',
+        farmaceutico: 'Drª Fernanda Cristina Derencio',
+      crf:          'CRF 89.439',
       telefone2: '',
       instagram: '@drogarianova_mogi',
       instagramUrl: INSTAGRAM2,
@@ -380,12 +384,16 @@
     }
 
     /* Meta */
+     /* Meta */
     if (mapInfoMeta){
       let meta = '<span><strong>WhatsApp:</strong> ' + esc(loja.whatsapp) + '</span>';
       if (loja.telefone2){
         meta += '<span><strong>Telefone:</strong> ' + esc(loja.telefone2) + '</span>';
       }
       meta += '<span><strong>Instagram:</strong> ' + esc(loja.instagram) + '</span>';
+      
+      meta += '<span style="flex-basis:100%; margin-top:.2rem"><strong>Farmacêutica Resp.:</strong> ' + esc(loja.farmaceutico) + ' (' + esc(loja.crf) + ')</span>';
+
       mapInfoMeta.innerHTML = meta;
     }
 
