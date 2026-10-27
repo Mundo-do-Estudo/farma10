@@ -63,14 +63,14 @@
       5: { abre: '08:30', fecha: '19:20' },  // Sexta
       6: { abre: '08:30', fecha: '19:00' }   // Sábado
     },
-    loja2: {  // Drogaria Nova Mogi
-      0: { abre: '08:30', fecha: '15:00' },  // Domingo
-      1: { abre: '08:30', fecha: '20:00' },  // Segunda
-      2: { abre: '08:30', fecha: '20:00' },  // Terça
-      3: { abre: '08:30', fecha: '20:00' },  // Quarta
-      4: { abre: '08:30', fecha: '20:00' },  // Quinta
-      5: { abre: '08:30', fecha: '20:00' },  // Sexta
-      6: { abre: '08:30', fecha: '20:00' }   // Sábado
+       loja2: {  // Drogaria Nova Mogi
+      0: { abre: '07:00', fecha: '14:00' },  // Domingo
+      1: { abre: '07:00', fecha: '20:00' },  // Segunda
+      2: { abre: '07:00', fecha: '20:00' },  // Terça
+      3: { abre: '07:00', fecha: '20:00' },  // Quarta
+      4: { abre: '07:00', fecha: '20:00' },  // Quinta
+      5: { abre: '07:00', fecha: '20:00' },  // Sexta
+      6: { abre: '07:00', fecha: '20:00' }   // Sábado
     }
   };
 
