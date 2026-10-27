@@ -1283,3 +1283,21 @@ body.knock-locked{
 }
 
 
+.galeria__item img{
+  width:100%; height:100%; object-fit:cover;
+  transition: transform .8s var(--ease-out);
+}
+.galeria__item:hover img{ transform:scale(1.07); }
+
+.galeria__item img,
+.galeria__item video {   /* ← Adicionado aqui */
+  width:100%; height:100%; object-fit:cover;
+  display: block;        /* ← Adicionado para evitar espaços em branco */
+  transition: transform .8s var(--ease-out);
+}
+
+.galeria__item:hover img,
+.galeria__item:hover video { /* ← Adicionado aqui */
+  transform:scale(1.07); 
+}
+

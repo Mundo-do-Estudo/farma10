@@ -74,6 +74,22 @@
     }
   };
 
+  /* Pausa o vídeo da galeria se ele sair da tela */
+const videoGaleria = document.querySelector('.galeria__video');
+if (videoGaleria && 'IntersectionObserver' in window) {
+  const observerVideo = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        videoGaleria.play().catch(() => {}); // Tenta dar play
+      } else {
+        videoGaleria.pause(); // Pausa se sair da tela
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  observerVideo.observe(videoGaleria);
+}
+
   /* ==========================================================
      PRODUTOS EM PROMOÇÃO
      ========================================================== */
